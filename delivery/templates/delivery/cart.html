@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart | MealMate</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f8f9fb;
+            color: #222;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+
+            padding: 20px 8%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffe600;
+        }
+
+        .welcome {
+            font-size: 16px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+
+            margin: 40px auto;
+        }
+
+
+        /* ================= PAGE TITLE ================= */
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            color: #222;
+
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #777;
+            font-size: 15px;
+        }
+
+
+        /* ================= CART CARD ================= */
+
+        .cart-card {
+            background: white;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* ================= TABLE ================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #fff3ef;
+        }
+
+        th {
+            padding: 18px;
+
+            text-align: left;
+
+            color: #e8492f;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 18px;
+
+            border-top: 1px solid #eee;
+
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #fffaf8;
+        }
+
+
+        /* ================= FOOD IMAGE ================= */
+
+        .food-image {
+            width: 100px;
+            height: 75px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            display: block;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* ================= ITEM NAME ================= */
+
+        .item-name {
+            font-size: 17px;
+
+            font-weight: bold;
+
+            color: #222;
+        }
+
+
+        /* ================= DESCRIPTION ================= */
+
+        .description {
+            color: #777;
+
+            line-height: 1.5;
+
+            max-width: 350px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= PRICE ================= */
+
+        .price {
+            color: #e8492f;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= REMOVE BUTTON ================= */
+
+        .remove-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 18px;
+
+            background: #fff1f1;
+
+            color: #d63031;
+
+            border: 1px solid #ffd0d0;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: all 0.3s ease;
+
+            white-space: nowrap;
+        }
+
+        .remove-btn:hover {
+
+            background: #d63031;
+
+            color: white;
+
+            border-color: #d63031;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 6px 15px rgba(214, 48, 49, 0.25);
+        }
+
+        .remove-btn:active {
+
+            transform: scale(0.96);
+        }
+
+
+        /* ================= BOTTOM SECTION ================= */
+
+        .cart-bottom {
+
+            padding: 25px 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #fff;
+
+            border-top: 1px solid #eee;
+        }
+
+
+        /* ================= TOTAL ================= */
+
+        .total {
+
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+        .total span {
+
+            color: #e8492f;
+        }
+
+
+        /* ================= CHECKOUT ================= */
+
+        .checkout-btn {
+
+            border: none;
+
+            background: linear-gradient(
+                135deg,
+                #ff512f,
+                #dd2476
+            );
+
+            color: white;
+
+            padding: 14px 30px;
+
+            border-radius: 30px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 5px 15px rgba(221, 36, 118, 0.25);
+        }
+
+        .checkout-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(221, 36, 118, 0.35);
+        }
+
+
+        /* ================= EMPTY CART ================= */
+
+        .empty-message {
+
+            text-align: center;
+
+            padding: 60px;
+
+            color: #777;
+
+            font-size: 18px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .header {
+                padding: 18px 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .welcome {
+                font-size: 13px;
+            }
+
+            .container {
+                width: 95%;
+                margin: 25px auto;
+            }
+
+            .page-title h1 {
+                font-size: 26px;
+            }
+
+            /*
+                Allow horizontal scrolling
+                for the table on smaller screens.
+            */
+
+            .cart-card {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 850px;
+            }
+
+            .cart-bottom {
+                flex-direction: column;
+
+                gap: 20px;
+
+                text-align: center;
+            }
+
+            .total {
+                font-size: 20px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .header {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .welcome {
+                font-size: 12px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .page-title p {
+                font-size: 13px;
+            }
+
+            .checkout-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo">
+            🍴 Meal<span>Mate</span>
+        </div>
+
+        <div class="welcome">
+            Hi, <strong>{{ username }}</strong> 👋
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <h1>
+                🛒 Your Food Items
+            </h1>
+
+            <p>
+                Here are the delicious items you selected
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= CART CARD ================= -->
+
+        <div class="cart-card">
+
+
+            <table>
+
+
+                <!-- TABLE HEADER -->
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Item Image
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <!-- TABLE BODY -->
+
+                <tbody>
+
+
+                    {% for item in itemList %}
+
+
+                    <tr>
+
+
+                        <!-- IMAGE -->
+
+                        <td>
+
+                            <img
+                                src="{{ item.picture }}"
+                                alt="{{ item.name }}"
+                                class="food-image"
+                            >
+
+                        </td>
+
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <div class="item-name">
+
+                                {{ item.name }}
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- DESCRIPTION -->
+
+                        <td>
+
+                            <div class="description">
+
+                                {{ item.description }}
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- PRICE -->
+
+                        <td>
+
+                            <div class="price">
+
+                                ₹{{ item.price }}
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- REMOVE -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'remove_from_cart' item.id username %}"
+                                class="remove-btn"
+                            >
+
+                                🗑️ Remove
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% empty %}
+
+
+                    <!-- EMPTY CART -->
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            <div class="empty-message">
+
+                                🥺 Your cart is empty.
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+
+            <!-- ================= TOTAL + CHECKOUT ================= -->
+
+            <div class="cart-bottom">
+
+
+                <div class="total">
+
+                    Total Price:
+
+                    <span>
+                        ₹{{ total_price }}
+                    </span>
+
+                </div>
+
+
+                <form action="{% url 'checkout' username %}">
+
+                    <input
+                        type="submit"
+                        value="CHECK OUT →"
+                        class="checkout-btn"
+                    >
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Restaurant</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+            border: 1px solid #f3f4f6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #fff1e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .header h1 {
+            color: #222;
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            color: #999;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 15px 13px 43px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+            background: #fafafa;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff6b35;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            flex: 1;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .update-btn {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #e85a28;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(255, 107, 53, 0.25);
+        }
+
+        .cancel-btn {
+            background: #f3f4f6;
+            color: #555;
+        }
+
+        .cancel-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .rating-note {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="header">
+                <div class="icon">🍽️</div>
+                <h1>Update Restaurant</h1>
+                <p>Edit the restaurant information below</p>
+            </div>
+
+            <form action="{% url 'update_restaurant' restaurant.id %}" method="post">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label>Restaurant Name</label>
+                    <div class="input-box">
+                        <span class="input-icon">🏪</span>
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{restaurant.name}}"
+                            placeholder="Enter restaurant name"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Picture URL</label>
+                    <div class="input-box">
+                        <span class="input-icon">🖼️</span>
+                        <input
+                            type="text"
+                            name="picture"
+                            value="{{restaurant.picture}}"
+                            placeholder="Enter image URL">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Cuisine</label>
+                    <div class="input-box">
+                        <span class="input-icon">🍴</span>
+                        <input
+                            type="text"
+                            name="cuisine"
+                            value="{{restaurant.cuisine}}"
+                            placeholder="Example: Indian, Italian"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="input-box">
+                        <span class="input-icon">⭐</span>
+                        <input
+                            type="number"
+                            name="rating"
+                            min="0"
+                            max="5"
+                            step="0.5"
+                            value="{{restaurant.rating}}"
+                            required>
+                    </div>
+                    <div class="rating-note">
+                        Rating must be between 0 and 5
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn update-btn">
+                        ✓ Update Restaurant
+                    </button>
+
+                    <a href="javascript:history.back()" class="btn cancel-btn">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+

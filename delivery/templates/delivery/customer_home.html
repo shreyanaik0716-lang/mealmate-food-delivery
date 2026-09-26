@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Page | MealMate</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fb;
+            color: #222;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+
+            background: linear-gradient(
+                135deg,
+                #ff512f,
+                #dd2476
+            );
+
+            padding: 18px 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            color: white;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ffe082;
+        }
+
+        .welcome {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: 86%;
+            max-width: 1200px;
+
+            margin: 35px auto 30px;
+
+            padding: 35px 40px;
+
+            border-radius: 20px;
+
+            background: linear-gradient(
+                135deg,
+                #fff1eb,
+                #ffe4e8
+            );
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .hero-content h1 {
+            font-size: 32px;
+            color: #222;
+
+            margin-bottom: 10px;
+        }
+
+        .hero-content h1 span {
+            color: #ff512f;
+        }
+
+        .hero-content p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .hero-icon {
+            font-size: 65px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            margin: 20px 0 25px;
+
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           RESTAURANT GRID
+        ========================= */
+
+        .restaurant-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(300px, 360px));
+
+            justify-content: center;
+
+            gap: 30px;
+
+            padding-bottom: 50px;
+        }
+
+
+        /* =========================
+           RESTAURANT CARD
+        ========================= */
+
+        .restaurant-card {
+            width: 100%;
+
+            background: white;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.14);
+        }
+
+
+        /* =========================
+           IMAGE BOX
+        ========================= */
+
+        .image-container {
+            width: 100%;
+
+            aspect-ratio: 4 / 3;
+
+            overflow: hidden;
+
+            background: #f3f3f3;
+
+            position: relative;
+        }
+
+
+        /* =========================
+           RESTAURANT IMAGE
+        ========================= */
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+            object-position: center;
+
+            transition:
+                transform 0.4s ease;
+        }
+
+        .restaurant-card:hover
+        .image-container img {
+            transform: scale(1.04);
+        }
+
+
+        /* =========================
+           CARD CONTENT
+        ========================= */
+
+        .card-content {
+            padding: 20px;
+        }
+
+
+        /* =========================
+           RESTAURANT NAME
+        ========================= */
+
+        .restaurant-name {
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: #222;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           CUISINE
+        ========================= */
+
+        .cuisine {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================
+           RATING
+        ========================= */
+
+        .rating {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            background: #159447;
+
+            color: white;
+
+            padding: 6px 11px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 16px;
+        }
+
+
+        /* =========================
+           VIEW MENU BUTTON
+        ========================= */
+
+        .menu-btn {
+            display: block;
+
+            width: 100%;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff512f,
+                    #dd2476
+                );
+
+            color: white;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #dd2476,
+                    #ff512f
+                );
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(
+                    221,
+                    36,
+                    118,
+                    0.25
+                );
+        }
+
+
+        /* =========================
+           EMPTY RESTAURANT
+        ========================= */
+
+        .empty {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #777;
+
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #222;
+
+            color: #aaa;
+
+            text-align: center;
+
+            padding: 22px;
+
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: #ff512f;
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                width: 90%;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .restaurant-grid {
+                grid-template-columns:
+                    repeat(2, minmax(280px, 1fr));
+
+                gap: 22px;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .welcome {
+                font-size: 12px;
+            }
+
+
+            .hero {
+                width: 92%;
+
+                margin-top: 25px;
+
+                padding: 25px;
+
+                border-radius: 16px;
+            }
+
+            .hero-content h1 {
+                font-size: 24px;
+            }
+
+            .hero-content p {
+                font-size: 13px;
+            }
+
+            .hero-icon {
+                font-size: 45px;
+            }
+
+
+            .container {
+                width: 92%;
+            }
+
+
+            .section-title {
+                font-size: 22px;
+
+                margin-top: 20px;
+            }
+
+
+            .restaurant-grid {
+                grid-template-columns: 1fr;
+
+                gap: 22px;
+            }
+
+
+            .restaurant-card {
+                max-width: 380px;
+
+                margin: 0 auto;
+            }
+
+
+            .image-container {
+                aspect-ratio: 4 / 3;
+            }
+
+
+            .card-content {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Meal<span>Mate</span> 🍴
+        </div>
+
+        <div class="welcome">
+            Welcome, {{ username }}!
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Discover Great Food 🍔
+            </h1>
+
+            <p>
+                Explore restaurants and choose your favourite meals.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            🍕
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         RESTAURANTS
+    ========================= -->
+
+    <main class="container">
+
+        <h2 class="section-title">
+            🍽️ Restaurants Near You
+        </h2>
+
+
+        <div class="restaurant-grid">
+
+
+            {% for r in restaurantList %}
+
+
+            <!-- =========================
+                 RESTAURANT CARD
+            ========================= -->
+
+            <div class="restaurant-card">
+
+
+                <!-- IMAGE -->
+
+                <div class="image-container">
+
+                    <img
+                        src="{{ r.picture }}"
+                        alt="{{ r.name }}"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+
+                <!-- CARD CONTENT -->
+
+                <div class="card-content">
+
+
+                    <!-- RESTAURANT NAME -->
+
+                    <div class="restaurant-name">
+                        {{ r.name }}
+                    </div>
+
+
+                    <!-- CUISINE -->
+
+                    <div class="cuisine">
+                        🍴 {{ r.cuisine }}
+                    </div>
+
+
+                    <!-- RATING -->
+
+                    <div class="rating">
+                        ⭐ {{ r.rating }}
+                    </div>
+
+
+                    <!-- VIEW MENU -->
+
+                    <a
+                        href="{% url 'view_menu' r.id username %}"
+                        class="menu-btn"
+                    >
+                        View Menu →
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="empty">
+                🍽️ No restaurants available right now.
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026
+        <strong>MealMate</strong>
+        |
+        Delicious food, happy moments ❤️
+
+    </footer>
+
+
+</body>
+
+</html>

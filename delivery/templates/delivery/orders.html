@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Summary | Meal Mate</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f7f8fa;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            height: 72px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid #eeeeee;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #ff5a36;
+        }
+
+        .secure {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* Main */
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 55px auto;
+        }
+
+        /* Success Card */
+        .success-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eeeeee;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: #eaf8ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .success-card h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .success-message {
+            color: #777;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .username {
+            color: #ff5a36;
+            font-weight: 700;
+        }
+
+        /* Order Details */
+        .details {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .address-card {
+            background: #f8f9fb;
+            border: 1px solid #eeeeee;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .address-icon {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background: #fff0eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .address-content h3 {
+            font-size: 14px;
+            margin-bottom: 7px;
+            color: #555;
+        }
+
+        .address-content p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Delivery Message */
+        .delivery-box {
+            background: #fff8f5;
+            border: 1px solid #ffe3d9;
+            border-radius: 15px;
+            padding: 18px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .delivery-icon {
+            font-size: 25px;
+        }
+
+        .delivery-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Button */
+        .button-area {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            display: inline-block;
+        }
+
+        .primary-btn {
+            background: #ff5a36;
+            color: white;
+            box-shadow: 0 6px 18px rgba(255, 90, 54, 0.25);
+        }
+
+        .primary-btn:hover {
+            background: #e94b2a;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .secondary-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 25px 15px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .secure {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .success-card {
+                padding: 30px 20px;
+                border-radius: 17px;
+            }
+
+            .success-card h1 {
+                font-size: 24px;
+            }
+
+            .success-icon {
+                width: 68px;
+                height: 68px;
+                font-size: 32px;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="logo">
+            🍽️ Meal Mate
+        </div>
+
+        <div class="secure">
+            ✓ Order Confirmed
+        </div>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <div class="success-card">
+
+            <!-- Success Icon -->
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <!-- Greeting -->
+            <h1>
+                Thank you for your order,
+                <span class="username">{{ username }}</span>!
+            </h1>
+
+            <p class="success-message">
+                Your order has been successfully placed.
+                We’re getting your food ready and it will be delivered soon.
+            </p>
+
+
+            <!-- Details -->
+            <div class="details">
+
+                <h2 class="section-title">
+                    📍 Delivery Address
+                </h2>
+
+
+                <div class="address-card">
+
+                    <div class="address-icon">
+                        📍
+                    </div>
+
+                    <div class="address-content">
+
+                        <h3>
+                            Your delivery location
+                        </h3>
+
+                        <p>
+                            {{ customer.address }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Delivery Information -->
+                <div class="delivery-box">
+
+                    <div class="delivery-icon">
+                        🛵
+                    </div>
+
+                    <p>
+                        Your order will be delivered to this location shortly.
+                        Thank you for choosing <strong>Meal Mate</strong>!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="button-area">
+
+                {% if cart_items %}
+
+                    <a
+                        href="{% url 'customer_menu' cart_items.0.restaurant.id username %}"
+                        class="btn primary-btn">
+                        🍴 Back to Restaurants
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="/"
+                        class="btn primary-btn">
+                        🏠 Back to Home
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        © 2026 Meal Mate. All rights reserved.
+    </footer>
+
+</body>
+
+</html>
+

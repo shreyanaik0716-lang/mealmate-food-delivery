@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Restaurant</title>
+        {% loadstatic %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff7ed, #ffe4d6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .rating-box {
+            position: relative;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff6b35, #f4511e);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="icon">🍽️</div>
+
+        <h2>Add New Restaurant</h2>
+        <p class="subtitle">Enter the restaurant details below</p>
+
+        <form action="{% url 'add_restaurant' %}" method="post">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Restaurant Name</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Enter restaurant name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Picture URL</label>
+                <input 
+                    type="text" 
+                    name="picture" 
+                    placeholder="https://example.com/restaurant.jpg"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Cuisine</label>
+                <input 
+                    type="text" 
+                    name="cuisine" 
+                    placeholder="e.g. Indian, Chinese, Italian"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Rating</label>
+
+                <div class="rating-box">
+                    <input 
+                        type="number" 
+                        name="rating" 
+                        min="0" 
+                        max="5" 
+                        step="0.5"
+                        placeholder="Enter rating (0 - 5)"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit">
+                ➕ Add Restaurant
+            </button>
+
+        </form>
+
+        <p class="footer-text">
+            🍴 Manage your restaurants easily
+        </p>
+
+    </div>
+
+</body>
+</html>
+

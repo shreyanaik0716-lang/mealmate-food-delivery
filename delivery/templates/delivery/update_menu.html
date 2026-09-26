@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Menu</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            color: #292524;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(234, 88, 12, 0.25);
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .restaurant-name {
+            font-weight: 700;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-title h2 {
+            font-size: 22px;
+            color: #431407;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: #ffedd5;
+            color: #ea580c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 750px;
+        }
+
+        th {
+            background: #431407;
+            color: white;
+            padding: 15px 12px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px 12px;
+            text-align: center;
+            border-bottom: 1px solid #fed7aa;
+            font-size: 14px;
+            color: #57534e;
+        }
+
+        tbody tr {
+            transition: 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #fff7ed;
+            transform: scale(1.002);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Food image */
+        .food-img {
+            width: 90px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #fed7aa;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .price {
+            font-weight: 700;
+            color: #ea580c;
+            font-size: 15px;
+        }
+
+        .veg-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .veg-yes {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .veg-no {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .empty-message {
+            padding: 30px !important;
+            color: #78716c;
+            font-style: italic;
+        }
+
+        /* Form */
+        .form-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #431407;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #d6d3d1;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            background: #fafaf9;
+            transition: 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #f97316;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: #ea580c;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* Button */
+        .button-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .add-btn {
+            border: none;
+            padding: 13px 28px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 6px 15px rgba(234, 88, 12, 0.25);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(234, 88, 12, 0.3);
+        }
+
+        /* Back link */
+        .back-section {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #ea580c;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #ffedd5;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .page-header {
+                padding: 22px;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-card,
+            .card {
+                padding: 18px;
+            }
+
+            .button-container {
+                justify-content: stretch;
+            }
+
+            .add-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1>🍽️ Update Menu</h1>
+        <p>
+            Manage the menu items for
+            <span class="restaurant-name">{{ restaurant.name }}</span>
+        </p>
+    </div>
+
+    <!-- Current Menu -->
+    <div class="card">
+
+        <div class="card-title">
+            <div class="icon">📋</div>
+            <h2>Current Menu</h2>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Picture</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Vegetarian</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in itemList %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ item.name }}</strong>
+                        </td>
+
+                        <td>
+                            <img
+                                class="food-img"
+                                src="{{ item.picture }}"
+                                alt="{{ item.name }}"
+                            >
+                        </td>
+
+                        <td>
+                            {{ item.description }}
+                        </td>
+
+                        <td class="price">
+                            ₹{{ item.price }}
+                        </td>
+
+                        <td>
+
+                            {% if item.vegeterian %}
+
+                                <span class="veg-badge veg-yes">
+                                    ✓ Yes
+                                </span>
+
+                            {% else %}
+
+                                <span class="veg-badge veg-no">
+                                    ✕ No
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="empty-message">
+                            🍽️ No menu items available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- Add Menu Item -->
+    <div class="form-card">
+
+        <div class="card-title">
+            <div class="icon">➕</div>
+            <h2>Add Menu Item</h2>
+        </div>
+
+        <form
+            action="{% url 'update_menu' restaurant.id %}"
+            method="post"
+        >
+
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <!-- Item Name -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Item Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter food item name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Price -->
+                <div class="form-group">
+
+                    <label for="price">
+                        Price (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        step="0.01"
+                        min="0"
+                        placeholder="Enter price"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="form-group full">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Enter food item description"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Image URL -->
+                <div class="form-group">
+
+                    <label for="picture">
+                        Image URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="picture"
+                        name="picture"
+                        placeholder="https://example.com/food.jpg"
+                    >
+
+                </div>
+
+
+                <!-- Vegetarian -->
+                <div class="form-group">
+
+                    <label>
+                        Food Type
+                    </label>
+
+                    <div class="checkbox-group">
+
+                        <input
+                            type="checkbox"
+                            id="vegeterian"
+                            name="vegeterian"
+                        >
+
+                        <label for="vegeterian">
+                            Vegetarian
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Submit -->
+            <div class="button-container">
+
+                <button
+                    type="submit"
+                    class="add-btn"
+                >
+                    ➕ Add Menu Item
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Back -->
+    <div class="back-section">
+
+        <a
+            href="{% url 'open_show_restaurant' %}"
+            class="back-link"
+        >
+            ← Back to Restaurants
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

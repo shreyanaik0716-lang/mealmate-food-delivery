@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Meal Buddy</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f6f7fb;
+            color: #222;
+        }
+
+        /* Navbar */
+        .navbar {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #ff5a36;
+            letter-spacing: -0.5px;
+        }
+
+        .secure {
+            color: #777;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .secure span {
+            color: #28a745;
+            font-size: 17px;
+        }
+
+        /* Main */
+        .checkout-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            color: #202020;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* Cards */
+        .card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            border: 1px solid #eeeeee;
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .card-title h2 {
+            font-size: 20px;
+            color: #222;
+        }
+
+        .items-count {
+            background: #fff0eb;
+            color: #ff5a36;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* User */
+        .user-box {
+            background: #f8f9fb;
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .user-box strong {
+            color: #222;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fb;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 15px;
+            font-size: 13px;
+            color: #777;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 17px 15px;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .price {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Payment card */
+        .payment-card {
+            position: sticky;
+            top: 25px;
+        }
+
+        .payment-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            background: #fff0eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 18px;
+        }
+
+        .payment-card h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .payment-description {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .amount-box {
+            background: #f8f9fb;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        .amount-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .amount-row span:first-child {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .amount {
+            font-size: 25px;
+            font-weight: 800;
+            color: #222;
+        }
+
+        /* Button */
+        #rzp-button {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: #ff5a36;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 7px 18px rgba(255, 90, 54, 0.25);
+        }
+
+        #rzp-button:hover {
+            background: #e94b2a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(255, 90, 54, 0.32);
+        }
+
+        #rzp-button:active {
+            transform: translateY(0);
+        }
+
+        .payment-security {
+            margin-top: 18px;
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .payment-security span {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        /* Error */
+        .error-box {
+            background: #fff0f0;
+            color: #d93025;
+            border: 1px solid #ffd0d0;
+            padding: 16px 18px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-card {
+                position: static;
+            }
+
+            .checkout-container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 20px;
+                border-radius: 14px;
+            }
+
+            .secure {
+                display: none;
+            }
+
+            th,
+            td {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">🍽️ Meal Buddy</div>
+
+        <div class="secure">
+            <span>🔒</span>
+            Secure Checkout
+        </div>
+    </nav>
+
+
+    <!-- Main Checkout -->
+    <main class="checkout-container">
+
+        <div class="heading">
+            <h1>Checkout</h1>
+            <p>Review your order and complete your payment securely.</p>
+        </div>
+
+
+        {% if error %}
+
+            <div class="error-box">
+                ⚠️ {{ error }}
+            </div>
+
+        {% else %}
+
+        <div class="checkout-grid">
+
+            <!-- Order Summary -->
+            <section class="card">
+
+                <div class="card-title">
+                    <h2>Order Summary</h2>
+
+                    <span class="items-count">
+                        {{ cart_items|length }} Items
+                    </span>
+                </div>
+
+                <div class="user-box">
+                    👤 Welcome, <strong>{{ username }}</strong>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in cart_items %}
+
+                            <tr>
+                                <td class="item-name">
+                                    🍴 {{ item.name }}
+                                </td>
+
+                                <td class="price">
+                                    ₹{{ item.price }}
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Payment -->
+            <section class="card payment-card">
+
+                <div class="payment-icon">
+                    💳
+                </div>
+
+                <h2>Payment Details</h2>
+
+                <p class="payment-description">
+                    Complete your order using our secure Razorpay payment gateway.
+                </p>
+
+
+                <div class="amount-box">
+
+                    <div class="amount-row">
+
+                        <span>Total Amount</span>
+
+                        <span class="amount">
+                            ₹{{ total_price }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button id="rzp-button">
+                    🔒 Pay ₹{{ total_price }}
+                </button>
+
+
+                <div class="payment-security">
+                    <span>✓ Secure payment</span>
+                    &nbsp; • &nbsp;
+                    Powered by Razorpay
+                </div>
+
+            </section>
+
+        </div>
+
+        {% endif %}
+
+    </main>
+
+
+    <footer>
+        © 2026 Meal Buddy. All rights reserved.
+    </footer>
+
+
+    <!-- Razorpay -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+
+        // Razorpay amount must be in paise
+        "amount": "{{ total_price|floatformat:2 }}".replace(".", "") + "00",
+
+        "currency": "INR",
+
+        "name": "Meal Buddy",
+
+        "description": "Food Order Payment",
+
+        "order_id": "{{ order_id }}",
+
+        "handler": function (response) {
+
+            alert("Payment Successful!");
+
+            console.log("Payment ID:", response.razorpay_payment_id);
+            console.log("Order ID:", response.razorpay_order_id);
+            console.log("Signature:", response.razorpay_signature);
+
+            window.location.href =
+                "{% url 'orders' username %}";
+        },
+
+        "prefill": {
+            "name": "{{ username }}",
+            "email": "{{ customer.email|default:'customer@example.com' }}",
+            "contact": "{{ customer.mobile|default:'9999999999' }}"
+        },
+
+        "theme": {
+            "color": "#ff5a36"
+        },
+
+        "modal": {
+            "ondismiss": function () {
+                console.log("Payment popup closed");
+            }
+        }
+    };
+
+    var rzp = new Razorpay(options);
+
+    rzp.on('payment.failed', function (response) {
+        alert("Payment failed: " + response.error.description);
+
+        console.log("Payment Error:", response.error);
+    });
+
+    document.getElementById("rzp-button").onclick = function(e) {
+        e.preventDefault();
+        rzp.open();
+    };
+</script>
+
+</body>
+</html>
+
