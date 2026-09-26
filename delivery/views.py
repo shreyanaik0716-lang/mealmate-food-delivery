@@ -298,15 +298,3 @@ def orders(request, username):
         }
     )
 
-def create_live_admin(request):
-    if request.method == 'GET':
-        Customer.objects.get_or_create(
-            username='admin',
-            defaults={
-                'password': 'Admin@12345',
-                'email': 'admin@example.com',
-                'mobile': '9999999999',
-                'address': 'Admin Address',
-            }
-        )
-        return HttpResponse("Live admin created successfully!")
